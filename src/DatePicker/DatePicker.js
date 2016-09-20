@@ -132,6 +132,7 @@ class DatePicker extends Component {
     /**
      * Sets the date for the Date Picker programmatically.
      */
+<<<<<<< HEAD
     value: PropTypes.object,
   };
 
@@ -157,10 +158,47 @@ class DatePicker extends Component {
       date: this.isControlled() ? this.getControlledDate() : this.props.defaultDate,
     });
   }
+=======
+    value: React.PropTypes.any,
+
+    /**
+     * Creates a ValueLink with the value of date picker.
+     */
+    valueLink: React.PropTypes.object,
+
+    /**
+     * Wordings used inside the button of the dialog.
+     */
+    wordings: deprecated(React.PropTypes.object, 'Instead, use `cancelLabel` and `okLabel`.'),
+  },
+
+  contextTypes: {
+    muiTheme: React.PropTypes.object.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      autoOk: false,
+      cancelLabel: 'Cancel',
+      container: 'dialog',
+      disabled: false,
+      disableYearSelection: false,
+      firstDayOfWeek: 1,
+      okLabel: 'OK',
+      style: {},
+    };
+  },
+
+  getInitialState() {
+    return {
+      date: this.isControlled() ? this._getControlledDate() : this.props.defaultDate,
+    };
+  },
+>>>>>>> parent of d820ce8... [DatePicker remove _dangles
 
   componentWillReceiveProps(nextProps) {
-    if (this.isControlled()) {
-      const newDate = this.getControlledDate(nextProps);
+    if (this._isControlled()) {
+      const newDate = this._getControlledDate(nextProps);
       if (!isEqualDate(this.state.date, newDate)) {
         this.setState({
           date: newDate,
@@ -200,8 +238,13 @@ class DatePicker extends Component {
     this.openDialog();
   }
 
+<<<<<<< HEAD
   handleAccept = (date) => {
     if (!this.isControlled()) {
+=======
+  handleAccept(date) {
+    if (!this._isControlled()) {
+>>>>>>> parent of d820ce8... [DatePicker remove _dangles
       this.setState({
         date: date,
       });
@@ -230,20 +273,33 @@ class DatePicker extends Component {
     }
   };
 
+<<<<<<< HEAD
   isControlled() {
     return this.props.hasOwnProperty('value');
   }
+=======
+  _isControlled() {
+    return this.props.hasOwnProperty('value') ||
+      this.props.hasOwnProperty('valueLink');
+  },
+>>>>>>> parent of d820ce8... [DatePicker remove _dangles
 
-  getControlledDate(props = this.props) {
+  _getControlledDate(props = this.props) {
     if (props.value instanceof Date) {
       return props.value;
     }
   }
 
+<<<<<<< HEAD
   formatDate = (date) => {
     if (this.props.locale) {
       const DateTimeFormat = this.props.DateTimeFormat || dateTimeFormat;
       return new DateTimeFormat(this.props.locale, {
+=======
+  _formatDate(date) {
+    if (this.props.locale && this.props.DateTimeFormat) {
+      return new this.props.DateTimeFormat(this.props.locale, {
+>>>>>>> parent of d820ce8... [DatePicker remove _dangles
         day: 'numeric',
         month: 'numeric',
         year: 'numeric',
@@ -281,7 +337,11 @@ class DatePicker extends Component {
     } = this.props;
 
     const {prepareStyles} = this.context.muiTheme;
+<<<<<<< HEAD
     const formatDate = formatDateProp || this.formatDate;
+=======
+    const formatDate = this.props.formatDate || this._formatDate;
+>>>>>>> parent of d820ce8... [DatePicker remove _dangles
 
     return (
       <div className={className} style={prepareStyles(Object.assign({}, style))}>
